@@ -6,7 +6,7 @@
 # TODO : DETECT COLLISION WITH WALL
 # TODO : DETECT THE COLLISION WITH TAIL
 
-from turtle import Screen
+from turtle import Screen,Turtle
 from snake import Snake
 from food import Food
 from scoreboard import ScoreBoard
@@ -17,6 +17,20 @@ screen.setup(width=600, height=600)
 
 screen.bgcolor("black")
 screen.title("Snake Game")
+
+# BORDER
+border = Turtle()
+border.hideturtle()
+border.width(2)
+border.goto(-280, 280)
+border.color("white")
+# border.pendown()
+border.speed(0)
+
+for _ in range(4):
+    border.forward(560)
+    border.right(90)
+
 
 #           APPROACH 1
 # segment_1 = Turtle(shape="square")
