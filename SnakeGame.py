@@ -6,8 +6,11 @@
 # TODO : DETECT COLLISION WITH WALL
 # TODO : DETECT THE COLLISION WITH TAIL
 
-from turtle import Turtle, Screen
+from turtle import Screen
 from snake import Snake
+from food import Food
+from scoreboard import ScoreBoard
+
 import time
 screen = Screen()
 screen.setup(width=600, height=600)
@@ -28,40 +31,44 @@ screen.title("Snake Game")
 # segment_3.color("white")
 
 #           APPROACH 2
+
 screen.tracer(0)
 
+# Class
 snake = Snake()
+food = Food()
+
+# Scoreboard
+scoreboard = ScoreBoard()
+
+
+# Keys to Move Snake
+screen.listen()
+
+screen.onkey(key="Up", fun= snake.move_Up)
+screen.onkey(key="Down", fun= snake.move_Down)
+screen.onkey(key="Right", fun= snake.move_right)
+screen.onkey(key="Left", fun= snake.move_left)
 
 game_is_on = True
 while game_is_on:
     screen.update()
-    time.sleep(0.5)
+    time.sleep(0.1)
 
     snake.move()
 
+    if snake.head.distance(food) < 15:
+        # print("Hit")
+        food.refresh()
+        scoreboard.Increase_Score()
+        snake.increase_length_of_snake()
+        # snake.create_snake()
 
-# def move_Up():
-#     new_segment.forward(10)
-#
-# def move_Down():
-#     new_segment.backward(10)
-#
-# def move_right():
-#     new_segment.right(90)
-#
-# def move_left():
-#     new_segment.left(90)
-#
-# screen.listen()
-# screen.onkey(key="w", fun=move_Up)
-# screen.onkey(key="s", fun=move_Down)
-# screen.onkey(key="d", fun=move_right)
-# screen.onkey(key="a", fun=move_left)
+#     DETECT COLLISION WITH WALL
+    if snake.head.xcor() > 280 or snake.head.ycor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() < -280:
+        game_is_on = False
 
-
-
-
-
+scoreboard.game_end()
 
 
 screen.exitonclick()
