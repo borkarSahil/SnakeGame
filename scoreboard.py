@@ -2,6 +2,8 @@ from turtle import Turtle, Screen
 
 ALIGNMENT = 'center'
 FONT = ('Arial', 15, 'normal')
+
+
 class ScoreBoard(Turtle):
 
     def __init__(self):
@@ -19,12 +21,22 @@ class ScoreBoard(Turtle):
         self.display_score()
 
     def display_score(self):
+
+        # Reading contents from data.txt
+        with open("data.txt") as file:
+            contents = file.read()
+
         self.clear()
-        self.write(arg=f"Score : {self.score}  High Score : {self.high_score}", move=False, align=ALIGNMENT, font=FONT)
+        self.write(arg=f"Score : {self.score}  {contents}", move=False, align=ALIGNMENT, font=FONT)
 
     def reset_score(self):
         if self.score > self.high_score:
             self.high_score = self.score
+
+            # Writing high score in data.txt
+            with open("data.txt", mode="w") as file:
+                file.write(f"High Score {self.high_score}")
+
         self.score = 0
         self.display_score()
 
